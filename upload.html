@@ -46,10 +46,8 @@
     <div class="container">
         <h1>Upload File to GitHub</h1>
         <input type="file" id="fileInput">
-        <input type="text" id="repoInput" placeholder="Repo (owner/repo)">
         <input type="text" id="pathInput" placeholder="Path in Repo">
         <input type="text" id="branchInput" placeholder="Branch" value="main">
-        <input type="password" id="tokenInput" placeholder="GitHub Token">
         <button id="uploadBtn">Upload</button>
         <p id="status"></p>
     </div>
@@ -57,10 +55,8 @@
     <script>
         document.getElementById('uploadBtn').addEventListener('click', async () => {
             const fileInput = document.getElementById('fileInput');
-            const repoInput = document.getElementById('repoInput').value;
             const pathInput = document.getElementById('pathInput').value;
             const branchInput = document.getElementById('branchInput').value;
-            const tokenInput = document.getElementById('tokenInput').value;
             const status = document.getElementById('status');
 
             if (!fileInput.files.length) {
@@ -73,10 +69,10 @@
 
             reader.onload = async function(event) {
                 const content = btoa(event.target.result);
-                const response = await fetch(`https://api.github.com/repos/${repoInput}/contents/${pathInput}`, {
+                const response = await fetch(`https://api.github.com/repos/tradingover/contents/${pathInput}`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `token ${tokenInput}`,
+                        'Authorization': `token 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`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
