@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload to Upload.io</title>
+</head>
+<body>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const apiKey = 'YOUR_UPLOAD_IO_API_KEY'; // Ganti dengan API key Upload.io Anda
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch('https://api.upload.io/v1/files/basic', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${apiKey}`
+                        },
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('File uploaded:', result);
+                        alert('File uploaded successfully!');
+                    } else {
+                        const error = await response.json();
+                        console.error('Error uploading file:', error);
+                        alert('Failed to upload file.');
+                    }
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                    alert('Failed to upload file.');
+                }
